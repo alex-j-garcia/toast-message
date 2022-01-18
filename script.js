@@ -2,12 +2,15 @@ document.getElementById("toast").addEventListener("change", displayToast);
 
 function displayToast(event) {
   const toastDialog = document.createElement("div");
-  toastDialog.textContent = event.target.checked ? "You checked the box!" :
-    "You unchecked the box!";
+  toastDialog.innerHTML = `
+    <div class="header">☑️</div>
+    <p>${event.target.checked ? "You checked the box" : "You unchecked the box"}</p>
+    <div class="footer"></div>
+  `;
   toastDialog.classList.add("toast");
   toastDialog.style.top = getPositioning() + "px";
   document.body.appendChild(toastDialog);
-  setTimer(toastDialog);
+  setTimers(toastDialog);
 }
 
 function getPositioning() {
@@ -16,8 +19,17 @@ function getPositioning() {
   return lastToast ? lastToast.getBoundingClientRect().bottom : 0;
 }
 
-function setTimer(node) {
-  setTimeout(() => {
-    document.body.removeChild(node);
-  }, 3300);
+function setTimers(node) {
+  let footer = node.lastElementChild;
+  let ms = 25;
+  let intervalID = setInterval(() => {
+    let width = footer.style.width.slice(0, -1);
+    if (Number(width) >= 100) {
+      clearInterval(intervalID);
+      document.body.removeChild(node);
+    } else {
+      footer.style.width = ms * 100 / 3000 + "%";
+      ms += 25;
+    }
+  }, 25);
 }
