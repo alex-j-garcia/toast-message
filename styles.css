@@ -36,5 +36,13 @@ label {
   bottom: 0;
   width: 0;
   height: 5px;
-  background-color: hsla(160, 50%, 26%, 0.8);
+  background-color: hsla(160, 50%, 26%, 0.6);
+}
+
+[data-uncheck="true"] {
+  background-color: hsl(0, 53%, 58%);
+}
+
+.toast[data-uncheck="true"] .footer {
+  background-color: hsla(0, 50%, 26%, 0.6);
 }

@@ -1,12 +1,14 @@
 document.getElementById("toast").addEventListener("change", displayToast);
 
 function displayToast(event) {
-  const toastDialog = document.createElement("div");
+  let {checked} = event.target;
+  let toastDialog = document.createElement("div");
   toastDialog.innerHTML = `
     <div class="header">☑️</div>
-    <p>${event.target.checked ? "You checked the box" : "You unchecked the box"}</p>
+    <p>${checked ? "You checked the box" : "You unchecked the box"}</p>
     <div class="footer"></div>
   `;
+  if (!checked) toastDialog.setAttribute("data-uncheck", "true");
   toastDialog.classList.add("toast");
   toastDialog.style.top = getPositioning() + "px";
   document.body.appendChild(toastDialog);
