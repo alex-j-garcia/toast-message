@@ -21,22 +21,11 @@ function getPosition() {
   return lastToast ? lastToast.getBoundingClientRect().bottom : 0;
 }
 
-// function parseWidth({width}) {
-//   width = Number(width.slice(0, -2));
-//   if (width < 0) {
-//     console.log("It's a decimal");
-//   } else {
-//     return width;
-//   }
-// }
-
 function setTimers(progressBar) {
   let currentWidth = getComputedStyle(progressBar).width;
   let intervalID = setInterval(() => {
     let widthNum = currentWidth.slice(0, -2);
-    console.time();
     if (widthNum < 1.67) {
-      console.timeEnd();
       clearInterval(intervalID);
       document.body.removeChild(progressBar.offsetParent);
     } else {
