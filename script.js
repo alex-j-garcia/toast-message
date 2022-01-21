@@ -10,28 +10,37 @@ function displayToast(event) {
   `;
   if (!checked) toastDialog.setAttribute("data-uncheck", "true");
   toastDialog.classList.add("toast");
-  toastDialog.style.top = getPositioning() + "px";
+  toastDialog.style.top = getPosition() + "px";
   document.body.appendChild(toastDialog);
-  setTimers(toastDialog);
+  setTimers(toastDialog.lastElementChild);
 }
 
-function getPositioning() {
+function getPosition() {
   let toasts = document.body.getElementsByClassName("toast");
   let lastToast = toasts[toasts.length - 1];
   return lastToast ? lastToast.getBoundingClientRect().bottom : 0;
 }
 
-function setTimers(node) {
-  let footer = node.lastElementChild;
-  let ms = 25;
+// function parseWidth({width}) {
+//   width = Number(width.slice(0, -2));
+//   if (width < 0) {
+//     console.log("It's a decimal");
+//   } else {
+//     return width;
+//   }
+// }
+
+function setTimers(progressBar) {
+  let currentWidth = getComputedStyle(progressBar).width;
   let intervalID = setInterval(() => {
-    let width = footer.style.width.slice(0, -1);
-    if (Number(width) >= 100) {
+    let widthNum = currentWidth.slice(0, -2);
+    console.time();
+    if (widthNum < 1.67) {
+      console.timeEnd();
       clearInterval(intervalID);
-      document.body.removeChild(node);
+      document.body.removeChild(progressBar.offsetParent);
     } else {
-      footer.style.width = ms * 100 / 3000 + "%";
-      ms += 25;
+      currentWidth = progressBar.style.width = (widthNum - 1.67) + "px";
     }
   }, 25);
 }

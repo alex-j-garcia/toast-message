@@ -34,7 +34,7 @@ label {
 .toast .footer {
   position: absolute;
   bottom: 0;
-  width: 0;
+  width: 100%;
   height: 5px;
   background-color: hsla(160, 50%, 26%, 0.6);
 }
