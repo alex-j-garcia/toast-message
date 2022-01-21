@@ -10,15 +10,24 @@ function displayToast(event) {
   `;
   if (!checked) toastDialog.setAttribute("data-uncheck", "true");
   toastDialog.classList.add("toast");
-  toastDialog.style.top = getPosition() + "px";
+  toastDialog.style.top = getInitialPosition();
   document.body.appendChild(toastDialog);
   setTimers(toastDialog.lastElementChild);
 }
 
-function getPosition() {
+function getInitialPosition() {
   let toasts = document.body.getElementsByClassName("toast");
   let lastToast = toasts[toasts.length - 1];
-  return lastToast ? lastToast.getBoundingClientRect().bottom : 0;
+  return lastToast ? lastToast.getBoundingClientRect().bottom + "px" : 0;
+}
+
+function getNewPosition(node) {
+  let prevSibling = node.previousElementSibling;
+  if (prevSibling.nodeName != "SCRIPT") {
+    node.style.top = prevSibling.getBoundingClientRect().bottom + "px";
+  } else {
+    node.style.top = 0;
+  }
 }
 
 function setTimers(progressBar) {
@@ -29,6 +38,7 @@ function setTimers(progressBar) {
       clearInterval(intervalID);
       document.body.removeChild(progressBar.offsetParent);
     } else {
+      getNewPosition(progressBar.offsetParent);
       currentWidth = progressBar.style.width = (widthNum - 1.67) + "px";
     }
   }, 25);
