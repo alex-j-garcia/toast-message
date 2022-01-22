@@ -30,13 +30,6 @@ function getNewPosition(node) {
   }
 }
 
-// This function should use forEach to iterate over all the toasts
-// on the board and assign their new positions.
-
-// check/uncheck checkbox --> toast is added to the document.
-// it could be the only toast, in which case it won't return anything.
-// its position should be assigned to the next toast and every subsequent
-// toast should have its position assigned to that of the element before it.
 function calculatePositions() {
   let toasts = Array.from(document.body.getElementsByClassName("toast"));
   let top;
