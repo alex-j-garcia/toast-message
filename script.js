@@ -21,15 +21,6 @@ function getInitialPosition() {
   return lastToast ? lastToast.getBoundingClientRect().bottom + "px" : 0;
 }
 
-function getNewPosition(node) {
-  let prevSibling = node.previousElementSibling;
-  if (prevSibling.nodeName != "SCRIPT") {
-    node.style.top = prevSibling.getBoundingClientRect().bottom + "px";
-  } else {
-    node.style.top = 0;
-  }
-}
-
 function calculatePositions() {
   let toasts = Array.from(document.body.getElementsByClassName("toast"));
   let top;
