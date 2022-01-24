@@ -4,11 +4,16 @@ function createToast(event) {
   let {checked} = event.target;
   let toastDialog = document.createElement("div");
   toastDialog.innerHTML = `
-    <div class="header">☑️</div>
-    <p>${checked ? "You checked the box" : "You unchecked the box"}</p>
-    <div class="footer"></div>
+    <i class="fas fa-times"></i>
+    <div class="toast-body">
+      <i class="fas fa-check"></i>
+      <div class="toast-content">
+        <h4>Congrats!</h4>
+        <p>You did it 👏</p>
+      </div>
+    </div>
+    <div class="toast-footer"></div>
   `;
-  if (!checked) toastDialog.setAttribute("data-uncheck", "true");
   toastDialog.classList.add("toast");
   toastDialog.style.top = getInitialPosition();
   document.body.appendChild(toastDialog);
@@ -24,7 +29,7 @@ function getInitialPosition() {
 function calculatePositions() {
   let toasts = Array.from(document.body.getElementsByClassName("toast"));
   let top;
-  toasts.forEach((toast, index) => { // [0, 60, 120]
+  toasts.forEach((toast, index) => {
     let currentTop = getComputedStyle(toast).top;
     if (index != 0) toast.style.top = top;
     top = currentTop;
